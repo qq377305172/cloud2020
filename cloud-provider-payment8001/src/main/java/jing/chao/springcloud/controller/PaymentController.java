@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
+import sun.rmi.server.LoaderHandler;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author isi
@@ -53,8 +55,23 @@ public class PaymentController {
     @GetMapping(value = "/get/{id}")
     public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id) {
         Payment payment = paymentService.getPaymentById(id);
-        log.info(serverPort);
+        payment.setSerial(serverPort);
         return new CommonResult<Payment>().success(payment);
+    }
+
+    @GetMapping("/lb")
+    public String lb() {
+        return serverPort;
+    }
+
+    @GetMapping("/timeout")
+    public String paymentFeignTimeout() {
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "1";
     }
 
 }

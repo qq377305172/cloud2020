@@ -35,8 +35,12 @@ public class PaymentController {
     @GetMapping(value = "/get/{id}")
     public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id) {
         Payment payment = paymentService.getPaymentById(id);
-        log.info(serverPort);
+        payment.setSerial(serverPort);
         return new CommonResult<Payment>().success(payment);
     }
 
+    @GetMapping("/lb")
+    public String getPaymentLB() {
+        return serverPort;
+    }
 }
