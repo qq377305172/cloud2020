@@ -2,7 +2,7 @@ server:
   port: 7002
 spring:
   application:
-    name: cloud-eureka-service
+    name: cloud-eureka-server
 eureka:
   instance:
     # eureka服务端的实例名称
