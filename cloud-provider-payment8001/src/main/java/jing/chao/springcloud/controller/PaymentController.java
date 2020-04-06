@@ -74,4 +74,9 @@ public class PaymentController {
         return "1";
     }
 
+    @GetMapping("/zipkin")
+    public String zipkin() {
+        return serverPort;
+    }
+
 }
