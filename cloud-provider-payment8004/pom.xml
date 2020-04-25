@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cloud-payment-provider8004</artifactId>
+    <artifactId>cloud-provider8004-payment</artifactId>
     <dependencies>
         <dependency>
             <groupId>jing.chao.springcloud</groupId>

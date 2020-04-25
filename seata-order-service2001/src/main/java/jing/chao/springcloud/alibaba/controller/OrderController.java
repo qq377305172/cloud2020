@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 @RestController
 public class OrderController {
@@ -37,13 +36,13 @@ public class OrderController {
      */
     @GetMapping("snowflake")
     public String getIDBySnowflake() {
-        ExecutorService threadPool = Executors.newFixedThreadPool(5);
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 10, 5L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
         for (int i = 0; i < 20; i++) {
-            threadPool.submit(() -> {
+            executor.submit(() -> {
                 System.out.println(idGeneratorSnowflake.snowflakeId());
             });
         }
-        threadPool.shutdown();
+        executor.shutdown();
         return "hello snowflake";
     }
 }
